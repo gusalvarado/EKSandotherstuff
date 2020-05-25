@@ -118,27 +118,3 @@ resource "aws_iam_access_key" "route53" {
   count = "${local.external_route53_enable ? 1 : 0}"
   user  = "${aws_iam_user.route53.name}"
 }
-
-## Not required since at least traefik does not perform role assume.
-#
-
-# data "aws_iam_policy_document" "assume_route53" {
-#   count = "${local.external_route53_enable ? 1 : 0}"
-
-#   statement {
-#     actions = ["sts:AssumeRole"]
-
-#     principals {
-#       type        = "AWS"
-#       identifiers = ["${aws_iam_user.route53.arn}"]
-#     }
-#   }
-# }
-
-
-# resource "aws_iam_role" "assume_route53" {
-#   count              = "${local.external_route53_enable ? 1 : 0}"
-#   name               = "${module.route53_label.id}"
-#   assume_role_policy = "${data.aws_iam_policy_document.assume_route53.json}"
-#   tags               = "${module.route53_label.tags}"
-# }
