@@ -1,0 +1,4 @@
+terraform/Base/.terraform/
+terraform/Base/.terraform/*
+
+terraform/Base/terraform.exe
