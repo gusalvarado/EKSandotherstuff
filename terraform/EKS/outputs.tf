@@ -3,9 +3,9 @@ output "main_asg" {
   value       = "${local.main_asg}"
 }
 
-output "spark_asg" {
+output "other_asg" {
   description = "Spark ASG settings (Spark node pool for training)."
-  value       = "${local.spark_asg}"
+  value       = "${local.other_asg}"
 }
 
 output "kubeconfig" {

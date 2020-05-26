@@ -25,7 +25,7 @@ variable "main_asg" {
   }
 }
 
-variable "spark_asg" {
+variable "other_asg" {
   description = "Spark ActionML scalability group settings, the group for Spark cluster."
 
   default = {

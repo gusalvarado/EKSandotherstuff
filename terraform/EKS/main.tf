@@ -10,7 +10,7 @@ locals {
   }
 
   main_asg  = "${merge(local.asg_defaults, var.main_asg, map("name", "main"))}"
-  spark_asg = "${merge(local.asg_defaults, var.spark_asg, map("name", "spark"))}"
+  other_asg = "${merge(local.asg_defaults, var.other_asg, map("name", "spark"))}"
 }
 
 module "eks-label" {
@@ -25,6 +25,6 @@ module "eks" {
   cluster_name       = "${local.cluster_name}"
   subnets            = ["${var.subnets}"]
   vpc_id             = "${var.vpc_id}"
-  worker_groups      = ["${local.main_asg}", "${local.spark_asg}"]
+  worker_groups      = ["${local.main_asg}", "${local.other_asg}"]
   worker_group_count = "2"
 }
