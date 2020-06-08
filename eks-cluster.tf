@@ -15,14 +15,16 @@ module "eks" {
         instance_type = "t2.micro"
         additional_userdata = "group1"
         asg_desired_capacity = 2
-        additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
+        key_name = main_key
+        additional_security_group_ids = [aws_security_group.all.id]
       },
       {
         name = "worker-group-2"
         instance_type = "t2.micro"
         additional_userdata = "group2"
         asg_desired_capacity = 2
-        additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
+        key_name = main_key
+        additional_security_group_ids = [aws_security_group.all.id]
       }
   ]
 }

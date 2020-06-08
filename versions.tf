@@ -1,6 +1,10 @@
 terraform {
   required_version = ">= 0.12"
 }
+provider "aws" {
+  region = var.region
+}
+
 provider "random" {
   version = "~> 2.1"
 }
