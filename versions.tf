@@ -3,6 +3,7 @@ terraform {
 }
 provider "aws" {
   region = var.region
+  version = "2.65"
 }
 
 provider "random" {
