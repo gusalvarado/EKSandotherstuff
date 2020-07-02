@@ -2,3 +2,4 @@ eks/.terraform/
 eks/.terraform/*
 eks/.tfstate
 eks/*.tfstate.backup
+.vs/
