@@ -11,9 +11,9 @@ data "aws_ami" "ubuntu" {
     }
     owners = ["099720109477"]
 }
-resource "aws_key_pair" "main_key" {
-  key_name = "main-key"
-  public_key = file(".ssh/clickit.pub")
+resource "aws_key_pair" "clickit_key" {
+  key_name = "clickit_key"
+  public_key = file("../.ssh/clickit.pub")
 }
 resource "aws_eip" "bastion_ip" {
     vpc = true
@@ -22,8 +22,9 @@ resource "aws_eip" "bastion_ip" {
 resource "aws_instance" "bastion" {
     ami = data.aws_ami.ubuntu.id
     instance_type = "t2.micro"
+    key_name = "clickit_key"
 
     tags = {
-        Name = "bastion-${var.project}-${var.environment}"
+        Name = "bastion-${var.namespace}-${var.environment}"
     }
 }

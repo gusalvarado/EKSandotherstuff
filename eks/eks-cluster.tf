@@ -15,7 +15,6 @@ module "eks" {
         instance_type = "t2.micro"
         additional_userdata = "group1"
         asg_desired_capacity = 2
-        key_name = main_key
         additional_security_group_ids = [aws_security_group.all.id]
       },
       {
@@ -23,7 +22,6 @@ module "eks" {
         instance_type = "t2.micro"
         additional_userdata = "group2"
         asg_desired_capacity = 2
-        key_name = main_key
         additional_security_group_ids = [aws_security_group.all.id]
       }
   ]

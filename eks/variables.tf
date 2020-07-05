@@ -1,6 +1,6 @@
 ### main settings for project, avoid rewrite variables etc...
 variable "region" {
-  default = "us-east-2"
+  default = "us-west-2"
 }
 variable "account_id" {
   description = "Id of the account, needed in some resources"

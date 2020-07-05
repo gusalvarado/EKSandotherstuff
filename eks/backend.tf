@@ -1,7 +1,8 @@
 terraform {
     backend "s3" {
-        bucket = "terraform-states"
-        key = "path/"
-        dynamodb_table = "terraform-states"
+        bucket = "gustavo-terraform"
+        key = "tests/"
+        region = "us-west-2"
+        dynamodb_table = "terraform-lock"
     }
 }
