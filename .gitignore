@@ -6,4 +6,4 @@ eks/*.tfstate.backup
 global/.terraform/
 wp/.terraform
 wp/.terraform/*
-wp/tfstate*
+wp/terraform*
