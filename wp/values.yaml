@@ -2,16 +2,16 @@
 deployment:
   name: wordpress
   replicaCount: 1
-  containerName: wordpress
+  containerName: nginx
   image:
     repository: gusalvarado/k8s-ningx:latest
     imagePullSecrets:
       - name: imagepullsecret
     pullPolicy: IfNotPresent
   secret:
-    name: wordpress-secret
+    name: secret
   configMap:
-    name: wordpress-config
+    name: config
   resources:
     requests:
       cpu: 100m
@@ -20,41 +20,81 @@ deployment:
       cpu: 250m
       memory: 256Mi
   persistentVolumeClaim:
-    name: wordpress-pvc
+    name: pvc
     mountPath: /var/www/html
 #Service
 service:
-  name: wordpress
+  name: nginx
   portName: http
   port: 80
   targetPort: 80
   type: LoadBalancer
 #Ingress
 ingress:
-  host: wordpress.local
+  host: nginx.local
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
 #Secret
 secret:
-  name: wordpress-secret
+  name: secrets
   data:
-    DB_NAME: d29yZHByZXNz
-    DB_USER: d29yZHByZXNz
-    DB_PASSWORD: d29yZHByZXNz
-imagepullsecret:
-  name: imagepull-secret
-  data:
+    ENV: local
     .dockerconfigjson: ewogICAgImF1dGhzIjogewogICAgICAgICJodWIuZG9ja2VyLmNvbSI6IHsKICAgICAgICAgICAgInVzZXJuYW1lIjogImd1c2FsdmFyYWRvIiwKICAgICAgICAgICAgInBhc3N3b3JkIjogInp4S0FOT05AMTIzNCIsCiAgICAgICAgICAgICJlbWFpbCI6ICJnYWx2YXJhZG9jcnVlQGdtYWlsLmNvbSIKICAgICAgICB9CiAgICB9Cn0=
 #ConfigMap
 cm:
-  name: wordpress-config
+  name: config
   data:
-    info.php: |
-      <?php
-      phpinfo();
+    index.html: |
+      <html>
+        <head>
+            <title>Python App</title>
+            <style>
+                body {{
+                    text-align: center;
+                    font-family: Arial, sans-serif;
+                    background: linear-gradient(135deg, #245DEC, #9F5EFF);
+                    color: white;
+                    height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }}
+                .container {{
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+                }}
+                h1 {{
+                    font-size: 50px;
+                    font-weight: bold;
+                    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+                    color: #ffffff;
+                }}
+                h2 {{
+                    font-size: 28px;
+                    margin: 10px 0;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                    color: #ffffff;
+                }}
+                .highlight {{
+                    color: black;  /* Letras negras */
+                    font-weight: bold;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Hello from <span class="highlight">Python App!</span></h1>
+                <h2>Secret: <span class="highlight">{secret_value}</span></h2>
+                <h2>Config: <span class="highlight">{config_value}</span></h2>
+            </div>
+        </body>
+      </html>
 #PersistentVolume
 persistentVolume:
-  name: wordpress-pv
+  name: pv
   accessModes:
     - ReadWriteMany
   capacity: 1Gi
@@ -62,5 +102,5 @@ persistentVolume:
   hostPath: /mnt/data
 #PersistentVolumeClaim
 persistentVolumeClaim:
-  name: wordpress-pvc
+  name: pvc
   storage: 500Mi
