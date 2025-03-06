@@ -16,13 +16,13 @@ spec:
       - name: {{ .Values.deployment.containerName }}
         image: {{ .Values.deployment.image.repository }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
-        imagePullSecrets:
-        - name: {{ .Values.deployment.imagePullSecrets.name }}
         ports:
         - containerPort: 80
         volumeMounts:
         - name: {{ .Values.deployment.persistentVolumeClaim.name }}
           mountPath: {{ .Values.deployment.persistentVolumeClaim.mountPath }}
+      imagePullSecrets:
+      - name: {{ .Values.deployment.imagePullSecrets.name }}
       volumes:
       - name: {{ .Values.deployment.persistentVolumeClaim.name }}
         persistentVolumeClaim:
