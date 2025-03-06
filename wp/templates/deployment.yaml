@@ -1,54 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Values.deployment.containerName }}
+  labels:
+    app: {{ .Values.deployment.containerName }}
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: {{ .Release.Name }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Release.Name }}
-    spec:
-      serviceAccountName: {{ .Values.serviceAccount.name }}
-      containers:
-      - name: {{.ContainerName}}
-        image: {{ .Values.image.repository }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command:
-        {{- toYaml .Values.image.command | nindent 10 }}
-        env:
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.secret.name }}
-              key: SECRET_KEY
-        - name: CONFIG_VALUE
-          valueFrom:
-            configMapKeyRef:
-              name: {{ .Values.configMap.name }}
-              key: CONFIG_VALUE
-        resources:
-          requests:
-            cpu: {{ .Values.resources.requests.cpu }}
-            memory: {{ .Values.resources.requests.memory }}
-          limits:
-            cpu: {{ .Values.resources.limits.cpu }}
-            memory: {{ .Values.resources.limits.memory }}
-        volumeMounts:
-        - name: config-volume
-          mountPath: "/app"
-        - name: image-storage
-          mountPath: "/images"
-      volumes:
-      - name: config-volume
-        configMap:
-          name: {{ .Values.configMap.name }}
-          items:
-          - key: app.py
-            path: app.py
-      - name: image-storage
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistentVolumeClaim.name }}
+  image:
+    repository: {{ .Values.deployment.image.repository }}
+    pullPolicy: {{ .Values.deployment.image.pullPolicy }}
+    command: {{ .Values.deployment.image.command }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  secret:
+    name: {{ .Values.deployment.secret.name }}
+  configMap:
+    name: {{ .Values.deployment.configMap.name }}
+  resources:
+    name: {{ .Values.deployment.resources.name }}
+    requests:
+      cpu: {{ .Values.deployment.resources.requests.cpu }}
+      memory: {{ .Values.deployment.resources.requests.memory }}
+    limits:
+      cpu: {{ .Values.deployment.resources.limits.cpu }}
+      memory: {{ .Values.deployment.resources.limits.memory }}
+  volumeMounts:
+    name: {{ .Values.deployment.persistentVolumeClaim.name }}
+    mountPath: {{ .Values.deployment.persistentVolumeClaim.mountPath }}

@@ -22,6 +22,7 @@ deployment:
       memory: 256Mi
   persistentVolumeClaim:
     name: wordpress-pvc
+    mountPath: /var/www/html
 #Service
 service:
   name: wordpress
