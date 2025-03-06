@@ -51,7 +51,7 @@ cm:
       <?php
       phpinfo();
 #PersistentVolume
-pv:
+persistentVolume:
   name: wordpress-pv
   accessModes:
     - ReadWriteMany
@@ -59,6 +59,6 @@ pv:
   storageClass: gp2
   hostPath: /mnt/data
 #PersistentVolumeClaim
-pvc:
+persistentVolumeClaim:
   name: wordpress-pvc
   storage: 500Mi
