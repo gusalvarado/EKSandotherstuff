@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistentVolume.name }}
+  name: {{ .Values.pv.name }}
 spec:
-  storageClassName: {{ .Values.persistentVolume.storageClassName }}
+  storageClassName: {{ .Values.pv.storageClassName }}
   capacity:
-    storage: {{ .Values.persistentVolume.capacity }}
+    storage: {{ .Values.pv.capacity }}
   accessModes:
-    {{- toYaml .Values.persistentVolume.accessModes | nindent 4 }}
+    {{- toYaml .Values.pv.accessModes | nindent 4 }}
   hostPath:
-    path: {{ .Values.persistentVolume.hostPath }}
+    path: {{ .Values.pv.hostPath }}
