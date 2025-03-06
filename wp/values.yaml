@@ -4,12 +4,8 @@ deployment:
   replicaCount: 1
   containerName: wordpress
   image:
-    repository: gusalvarado/k8s-wp:latest
+    repository: gusalvarado/k8s-ningx:latest
     pullPolicy: IfNotPresent
-    command:
-    - "sh"
-    - "-c"
-    - "echo 'Hello, Kubernetes!'"
   secret:
     name: wordpress-secret
   configMap:

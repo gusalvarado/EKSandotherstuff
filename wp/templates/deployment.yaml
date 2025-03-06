@@ -16,7 +16,6 @@ spec:
       - name: {{ .Values.deployment.containerName }}
         image: {{ .Values.deployment.image.repository }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
-        command: {{ .Values.deployment.image.command }}
         envFrom:
         - secretRef:
             name: {{ .Values.deployment.secret.name }}
