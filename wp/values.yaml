@@ -6,7 +6,7 @@ deployment:
   image:
     repository: gusalvarado/k8s-nginx:latest
     pullPolicy: IfNotPresent
-  command: ["nginx", "-g", "daemon off;"]
+  command: ["/bin/sh", "-c","nginx", "-g", "daemon off;"]
   resources:
     requests:
       cpu: 100m
