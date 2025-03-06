@@ -17,7 +17,7 @@ spec:
         image: {{ .Values.deployment.image.repository }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         imagePullSecrets:
-          - name: {{ .Values.deployment.imagePullSecrets.name }}
+          - name: {{ .Values.deployment.secrets.name }}
         envFrom:
         - secretRef:
             name: {{ .Values.deployment.secret.name }}

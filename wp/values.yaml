@@ -1,6 +1,6 @@
 #Deployment
 deployment:
-  name: wordpress
+  name: wordpress-deployment
   replicaCount: 1
   containerName: nginx
   image:
@@ -9,7 +9,7 @@ deployment:
       - name: imagepullsecret
     pullPolicy: IfNotPresent
   secret:
-    name: secret
+    name: secrets
   configMap:
     name: config
   resources:
@@ -24,21 +24,20 @@ deployment:
     mountPath: /var/www/html
 #Service
 service:
-  name: nginx
+  name: wordpress-service
   portName: http
   port: 80
   targetPort: 80
   type: LoadBalancer
 #Ingress
 ingress:
-  host: nginx.local
+  host: wordpress.local
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
 #Secret
 secret:
   name: secrets
   data:
-    ENV: local
     .dockerconfigjson: ewogICAgImF1dGhzIjogewogICAgICAgICJodWIuZG9ja2VyLmNvbSI6IHsKICAgICAgICAgICAgInVzZXJuYW1lIjogImd1c2FsdmFyYWRvIiwKICAgICAgICAgICAgInBhc3N3b3JkIjogInp4S0FOT05AMTIzNCIsCiAgICAgICAgICAgICJlbWFpbCI6ICJnYWx2YXJhZG9jcnVlQGdtYWlsLmNvbSIKICAgICAgICB9CiAgICB9Cn0=
 #ConfigMap
 cm:
@@ -47,7 +46,7 @@ cm:
     index.html: |
       <html>
         <head>
-            <title>Python App</title>
+            <title>Hola</title>
             <style>
                 body {{
                     text-align: center;
