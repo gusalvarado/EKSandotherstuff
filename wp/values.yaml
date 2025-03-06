@@ -6,7 +6,7 @@ deployment:
   image:
     repository: gusalvarado/k8s-ningx:latest
     imagePullSecrets:
-      - name: docker-secret
+      - name: imagepull-secret
     pullPolicy: IfNotPresent
   secret:
     name: wordpress-secret
@@ -41,8 +41,8 @@ secret:
     DB_NAME: d29yZHByZXNz
     DB_USER: d29yZHByZXNz
     DB_PASSWORD: d29yZHByZXNz
-dockerSecret:
-  name: docker-secret
+imagepull-secret:
+  name: imagepull-secret
   data:
     .dockerconfigjson: ewogICAgImF1dGhzIjogewogICAgICAgICJodWIuZG9ja2VyLmNvbSI6IHsKICAgICAgICAgICAgInVzZXJuYW1lIjogImd1c2FsdmFyYWRvIiwKICAgICAgICAgICAgInBhc3N3b3JkIjogInp4S0FOT05AMTIzNCIsCiAgICAgICAgICAgICJlbWFpbCI6ICJnYWx2YXJhZG9jcnVlQGdtYWlsLmNvbSIKICAgICAgICB9CiAgICB9Cn0=
 #ConfigMap

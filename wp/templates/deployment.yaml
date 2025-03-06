@@ -15,9 +15,9 @@ spec:
       containers:
       - name: {{ .Values.deployment.containerName }}
         image: {{ .Values.deployment.image.repository }}
-        imagePullSecrets:
-        - name: {{ .Values.dockerSecret.name }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        imagePullSecrets:
+          - name: {{ .Values.deployment.imagePullSecrets.name }}
         envFrom:
         - secretRef:
             name: {{ .Values.deployment.secret.name }}
