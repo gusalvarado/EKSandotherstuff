@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: image-storage-pv
+spec:
+  storageClassName: local # Requerido, storage local del nodo
+  capacity:
+    storage: 100Mi 
+  accessModes:
+    - ReadWriteOnce  #  Requerido
+  hostPath:
+    path: "/mnt/data/"  #  Requerido, ubicación en el host (para Minikube)

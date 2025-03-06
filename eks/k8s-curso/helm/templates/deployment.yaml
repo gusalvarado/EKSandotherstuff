@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: python-container
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: 
+        {{- toYaml .Values.image.command | nindent 10 }}
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.name }}
+              key: SECRET_KEY
+        - name: CONFIG_VALUE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.configMap.name }}
+              key: CONFIG_VALUE
+        resources:
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: "/app"
+        - name: image-storage
+          mountPath: "/images"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Values.configMap.name }}
+          items:
+          - key: app.py
+            path: app.py
+      - name: image-storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}

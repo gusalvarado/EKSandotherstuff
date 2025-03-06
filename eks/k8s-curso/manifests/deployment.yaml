@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  replicas: 1  # Opcional (Default: 1)
+  selector:
+    matchLabels:
+      app: python-app  # Requerido
+  template:
+    metadata:
+      labels:
+        app: python-app  # Requerido
+    spec:
+      serviceAccountName: python-app-sa  # Asigna la ServiceAccount aquí
+      containers:
+      - name: python-container
+        image: my-python-app  # Requerido, imagen base
+        imagePullPolicy: IfNotPresent
+        command: ["python", "/app/app.py"]  # Requerido, ejecuta el código
+        env:
+        - name: SECRET_KEY  
+          valueFrom:
+            secretKeyRef:
+              name: python-secrets  #  Requerido
+              key: SECRET_KEY  
+        - name: CONFIG_VALUE  
+          valueFrom:
+            configMapKeyRef:
+              name: python-config  #  Requerido
+              key: CONFIG_VALUE  
+        resources: # Opcional, si no se especifica, un pod puede utilizar todos los recursos de un nodo
+            requests: #Opcional - recursos garantizados 
+              cpu: "250m"   # 0.25 CPU (250 millicores)
+              memory: "128Mi"  # 128 MB de RAM
+            limits: # Opcional, maximo de recursos que puede utilizar
+              cpu: "500m"   # 0.5 CPU (500 millicores)
+              memory: "256Mi"  # 256 MB de RAM:
+        
+        volumeMounts:
+        - name: config-volume
+          mountPath: "/app"  #  Requerido, ruta en el contenedor
+        - name: image-storage
+          mountPath: "/images"  #  Requerido, volumen de imágenes
+
+      volumes:
+      - name: config-volume
+        configMap:
+          name: python-config  #  Requerido
+          items:
+          - key: app.py
+            path: app.py  #  Requerido, se monta el script en /app/app.py
+      - name: image-storage
+        persistentVolumeClaim:
+          claimName: image-storage-pvc  #  Requerido, usa el PVC

@@ -1,0 +1,68 @@
+#Deployment
+deployment:
+  enabled: true
+  replicaCount: 1
+  containerName: wordpress
+  image:
+    repository: gusalvarado/k8s-wp:latest
+    pullPolicy: IfNotPresent
+    command:
+    - "sh"
+    - "-c"
+    - "echo 'Hello, Kubernetes!'"
+  secret:
+    name: wordpress-secret
+  configMap:
+    name: wordpress-config
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+  persistentVolumeClaim:
+    name: wordpress-pvc
+#Service
+service:
+  enabled: true
+  name: wordpress
+  portName: http
+  port: 80
+  targetPort: 80
+  type: LoadBalancer
+#Ingress
+ingress:
+  enabled: true
+  host: wordpress.local
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+#Secret
+secret:
+  enabled: true
+  name: wordpress-secret
+  data:
+    DB_NAME: d29yZHByZXNz
+    DB_USER: d29yZHByZXNz
+    DB_PASSWORD: d29yZHByZXNz
+#ConfigMap
+configMap:
+  enabled: true
+  name: wordpress-config
+  data:
+    info.php: |
+      <?php
+      phpinfo();
+#PersistentVolume
+persistentVolume:
+  enabled: true
+  name: wordpress-pv
+  accessModes:
+    - ReadWriteMany
+  capacity: 1Gi
+  storageClass: gp2
+#PersistentVolumeClaim
+persistentVolumeClaim:
+  enabled: true
+  name: wordpress-pvc
+  storage: 500Mi
