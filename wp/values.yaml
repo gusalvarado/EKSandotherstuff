@@ -22,6 +22,7 @@ deployment:
       memory: 256Mi
   persistentVolumeClaim:
     name: wordpress-pvc
+    mountPath: /var/www/html
 #Service
 service:
   name: wordpress
@@ -42,7 +43,7 @@ secret:
     DB_USER: d29yZHByZXNz
     DB_PASSWORD: d29yZHByZXNz
 #ConfigMap
-configMap:
+cm:
   name: wordpress-config
   data:
     info.php: |
