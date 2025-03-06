@@ -8,10 +8,6 @@ deployment:
     imagePullSecrets:
       name: secret
     pullPolicy: IfNotPresent
-  secret:
-    name: secret
-  configMap:
-    name: config
   resources:
     requests:
       cpu: 100m

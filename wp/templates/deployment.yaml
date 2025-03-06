@@ -17,12 +17,7 @@ spec:
         image: {{ .Values.deployment.image.repository }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         imagePullSecrets:
-          - name: {{ .Values.deployment.secret.name }}
-        envFrom:
-        - secretRef:
-            name: {{ .Values.deployment.secret.name }}
-        - configMapRef:
-            name: {{ .Values.deployment.configMap.name }}
+        - name: {{ .Values.deployment.secret.name }}
         ports:
         - containerPort: 80
         volumeMounts:
