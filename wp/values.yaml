@@ -6,10 +6,10 @@ deployment:
   image:
     repository: gusalvarado/k8s-ningx:latest
     imagePullSecrets:
-      - name: imagepullsecret
+      name: secret
     pullPolicy: IfNotPresent
   secret:
-    name: secrets
+    name: secret
   configMap:
     name: config
   resources:
@@ -36,7 +36,7 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
 #Secret
 secret:
-  name: secrets
+  name: secret
   data:
     .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIlozVnpZV3gyWVhKaFpHODZlbmhMUVU1UFRrQXhNak0wIgoJCX0KCX0KfQ==
 #ConfigMap
