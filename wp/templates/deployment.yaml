@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.containerName }}
-  labels:
-    app: {{ .Values.deployment.containerName }}
+  name: {{ .Values.deployment.name }}
 spec:
-  image:
-    repository: {{ .Values.deployment.image.repository }}
-    pullPolicy: {{ .Values.deployment.image.pullPolicy }}
-    command: {{ .Values.deployment.image.command }}
   replicas: {{ .Values.deployment.replicaCount }}
-  secret:
-    name: {{ .Values.deployment.secret.name }}
-  configMap:
-    name: {{ .Values.deployment.configMap.name }}
-  resources:
-    name: {{ .Values.deployment.resources.name }}
-    requests:
-      cpu: {{ .Values.deployment.resources.requests.cpu }}
-      memory: {{ .Values.deployment.resources.requests.memory }}
-    limits:
-      cpu: {{ .Values.deployment.resources.limits.cpu }}
-      memory: {{ .Values.deployment.resources.limits.memory }}
-  volumeMounts:
-    name: {{ .Values.deployment.persistentVolumeClaim.name }}
-    mountPath: {{ .Values.deployment.persistentVolumeClaim.mountPath }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.containerName }}
+        image: {{ .Values.deployment.image.repository }}
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        command: {{ .Values.deployment.image.command }}
+        envFrom:
+        - secretRef:
+            name: {{ .Values.deployment.secret.name }}
+        - configMapRef:
+            name: {{ .Values.deployment.configMap.name }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: {{ .Values.deployment.persistentVolumeClaim.name }}
+          mountPath: {{ .Values.deployment.persistentVolumeClaim.mountPath }}

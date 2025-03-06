@@ -1,5 +1,6 @@
 #Deployment
 deployment:
+  name: wordpress
   replicaCount: 1
   containerName: wordpress
   image:
