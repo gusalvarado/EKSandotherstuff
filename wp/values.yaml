@@ -4,7 +4,7 @@ deployment:
   replicaCount: 1
   containerName: nginx
   image:
-    repository: gusalvarado/k8s-ningx:latest
+    repository: gusalvarado/k8s-nginx:latest
     pullPolicy: IfNotPresent
   resources:
     requests:
