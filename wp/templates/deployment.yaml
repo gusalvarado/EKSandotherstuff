@@ -27,3 +27,7 @@ spec:
         volumeMounts:
         - name: {{ .Values.deployment.persistentVolumeClaim.name }}
           mountPath: {{ .Values.deployment.persistentVolumeClaim.mountPath }}
+      volumes:
+      - name: {{ .Values.deployment.persistentVolumeClaim.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.deployment.persistentVolumeClaim.name }}
