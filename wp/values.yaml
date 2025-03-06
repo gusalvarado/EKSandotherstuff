@@ -1,6 +1,5 @@
 #Deployment
 deployment:
-  enabled: true
   replicaCount: 1
   containerName: wordpress
   image:
@@ -25,7 +24,6 @@ deployment:
     name: wordpress-pvc
 #Service
 service:
-  enabled: true
   name: wordpress
   portName: http
   port: 80
@@ -33,13 +31,11 @@ service:
   type: LoadBalancer
 #Ingress
 ingress:
-  enabled: true
   host: wordpress.local
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
 #Secret
 secret:
-  enabled: true
   name: wordpress-secret
   data:
     DB_NAME: d29yZHByZXNz
@@ -47,7 +43,6 @@ secret:
     DB_PASSWORD: d29yZHByZXNz
 #ConfigMap
 configMap:
-  enabled: true
   name: wordpress-config
   data:
     info.php: |
@@ -55,14 +50,13 @@ configMap:
       phpinfo();
 #PersistentVolume
 persistentVolume:
-  enabled: true
   name: wordpress-pv
   accessModes:
     - ReadWriteMany
   capacity: 1Gi
   storageClass: gp2
+  hostPath: /mnt/data
 #PersistentVolumeClaim
 persistentVolumeClaim:
-  enabled: true
   name: wordpress-pvc
   storage: 500Mi
