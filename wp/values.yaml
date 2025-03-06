@@ -38,7 +38,7 @@ ingress:
 secret:
   name: secrets
   data:
-    .dockerconfigjson: ewogICAgImF1dGhzIjogewogICAgICAgICJodWIuZG9ja2VyLmNvbSI6IHsKICAgICAgICAgICAgInVzZXJuYW1lIjogImd1c2FsdmFyYWRvIiwKICAgICAgICAgICAgInBhc3N3b3JkIjogInp4S0FOT05AMTIzNCIsCiAgICAgICAgICAgICJlbWFpbCI6ICJnYWx2YXJhZG9jcnVlQGdtYWlsLmNvbSIKICAgICAgICB9CiAgICB9Cn0=
+    .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIlozVnpZV3gyWVhKaFpHODZlbmhMUVU1UFRrQXhNak0wIgoJCX0KCX0KfQ==
 #ConfigMap
 cm:
   name: config
