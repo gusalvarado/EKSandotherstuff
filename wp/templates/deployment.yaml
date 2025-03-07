@@ -12,7 +12,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-deployment
     spec:
-      serviceAccountName: {{ .Values.serviceAccount.name }}
+      serviceAccountName: default
       containers:
         - name: {{ .Values.container.name }}
           image: {{ .Values.container.image }}
