@@ -30,7 +30,7 @@ containers:
       memory: 256Mi
   volumeMounts:
     - name: nginx-config
-      mountPath: /etc/nginx/conf.d
+      mountPath: /etc/nginx/conf.d/wp.conf
 volumes:
   - name: nginx-config
     configMap:
