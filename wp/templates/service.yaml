@@ -7,7 +7,7 @@ spec:
     app: {{ .Release.Name }}-service
   ports:
   - protocol: TCP
-      name: {{ .Values.service.portName }}
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    name: {{ .Values.service.name }}
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.port }}
   type:  {{ .Values.service.type }}

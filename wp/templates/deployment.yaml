@@ -14,39 +14,39 @@ spec:
     spec:
       serviceAccountName: default
       containers:
-        - name: {{ .Values.container.name }}
-          image: {{ .Values.container.image }}
-          imagePullPolicy: {{ .Values.container.pullPolicy }}
+        - name: {{ .Values.containers.name }}
+          image: {{ .Values.containers.image }}
+          imagePullPolicy: {{ .Values.containers.pullPolicy }}
           command:
-          {{- toYaml .Values.container.command | nindent 10 }}
+          {{- toYaml .Values.containers.command | nindent 10 }}
           env:
-            {{- range .Values.container.env }}
+            {{- range .Values.containers.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-        resources:
+          resources:
           requests:
-            cpu: {{ .Values.container.resources.requests.cpu }}
-            memory: {{ .Values.container.resources.requests.memory }}
+            cpu: {{ .Values.containers.resources.requests.cpu }}
+            memory: {{ .Values.containers.resources.requests.memory }}
           limits:
-            cpu: {{ .Values.container.resources.limits.cpu }}
-            memory: {{ .Values.container.resources.limits.memory }}
-        volumeMounts:
-          {{- range .Values.container.volumeMounts }}
+            cpu: {{ .Values.containers.resources.limits.cpu }}
+            memory: {{ .Values.containers.resources.limits.memory }}
+          volumeMounts:
+            {{- range .Values.containers.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              {{- end }}
+          volumes:
+            {{- range .Values.volumes }}
           - name: {{ .name }}
-            mountPath: {{ .mountPath }}
+            {{- if .configMap }}
+            configMap:
+              name: {{ .configMap.name }}
+            {{- end }}
+            {{- if .secret }}
+            secret:
+              secretName: {{ .secret.name }}
+            {{- end }}
           {{- end }}
-      volumes:
-        {{- range .Values.volumes }}
-        - name: {{ .name }}
-          {{- if .configMap }}
-          configMap:
-            name: {{ .configMap.name }}
-          {{- end }}
-          {{- if .secret }}
-          secret:
-            secretName: {{ .secret.name }}
-          {{- end }}
-        {{- end }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistentVolumeClaim.claimName }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistentVolumeClaim.claimName }}
