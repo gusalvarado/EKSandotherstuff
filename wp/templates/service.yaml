@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wp.fullname" . }}
-  labels:
-    {{- include "wp.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-service
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "wp.selectorLabels" . | nindent 4 }}
+    app: {{ .Release.Name }}-service
+  ports:
+  - protocol: TCP
+      name: {{ .Values.service.portName }}
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  type:  {{ .Values.service.type }}
