@@ -67,3 +67,5 @@ service:
   portName: "http"
   port: 80
   type: ClusterIP
+test:
+  enabled: false
