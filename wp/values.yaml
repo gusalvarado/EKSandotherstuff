@@ -44,12 +44,12 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 persistentVolume:
-  storageClassName: local-storage
+  storageClassName: manual
   capacity: 1Gi
   accessModes: ReadWriteOnce
-  hostPath: /var/www/html
+  hostPath: /home/ec2-user/wordpress
 persistentVolumeClaim:
-  storageClassName: local-storage
+  storageClassName: manual
   accessModes: ReadWriteOnce
   resources:
     requests:
