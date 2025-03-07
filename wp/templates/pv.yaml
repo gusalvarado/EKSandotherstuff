@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: {{ .Release.Name }}-pv
 spec:
+  storageClassName: {{ .Values.persistentVolume.storageClassName }}
   capacity:
     storage: {{ .Values.persistentVolume.capacity }}
   accessModes:
