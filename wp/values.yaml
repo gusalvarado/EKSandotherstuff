@@ -56,12 +56,12 @@ persistentVolumeClaim:
       storage: 1Gi
 secret:
   data:
-    DB_NAME: wordpress
-    DB_USER: wordpress
-    DB_PASSWORD: wordpress
-    DB_HOST: mysql
-    DB_PORT: "3306"
-    WP_NAME: local
+    - DB_NAME: wordpress
+    - DB_USER: wordpress
+    - DB_PASSWORD: wordpress
+    - DB_HOST: mysql
+    - DB_PORT: 3306
+    - WP_NAME: local
 service:
   portName: "http"
   port: 80
