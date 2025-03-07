@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-pvc
 spec:
-  storageClassName: {{ .Values.persistentVolumeClaim.storageClassName }}
   accessModes:
     {{- toYaml .Values.persistentVolumeClaim.accessModes | nindent 4 }}
   resources:
