@@ -1,5 +1,0 @@
-apiVersion: v2
-name: python-app-chart
-description: A Helm chart for deploying a Python app
-version: 0.1.0
-appVersion: "1.0"
