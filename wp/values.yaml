@@ -13,30 +13,31 @@ configMap:
       }
 deployment:
   replicaCount: 1
-  containers:
-    name: nginx
-    image: nginx:1.15.8
-    imagePullPolicy: IfNotPresent
-    command: ["nginx", "-g", "daemon off;"]
-    env:
-      - name: wp-name
-        value: local
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 200m
-        memory: 256Mi
-    volumeMounts:
+  template:
+    containers:
+      name: nginx
+      image: nginx:1.15.8
+      imagePullPolicy: IfNotPresent
+      command: ["nginx", "-g", "daemon off;"]
+      env:
+        - name: wp-name
+          value: local
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+    volumes:
       - name: nginx-config
-        mountPath: /etc/nginx/conf.d
-  volumes:
-    - name: nginx-config
-      configMap:
-        name: nginx-config
-  persistentVolumeClaim:
-    claimName: "persistent-storage"
+        configMap:
+          name: nginx-config
+    persistentVolumeClaim:
+      claimName: "persistent-storage"
 hpa:
   enabled: false
 ingress:
