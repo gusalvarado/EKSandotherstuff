@@ -46,11 +46,13 @@ ingress:
 persistentVolume:
   storageClassName: local
   capacity: 1Gi
-  accessModes: ReadWriteOnce
+  accessModes:
+    - ReadWriteOnce
   hostPath: /home/ec2-user/wordpress
 persistentVolumeClaim:
   storageClassName: local
-  accessModes: ReadWriteOnce
+  accessModes:
+    - ReadWriteOnce
   storage: 1Gi
 secret:
   data:
