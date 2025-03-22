@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-agent
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-agent
+  template:
+    metadata:
+      labels:
+        app: devops-agent
+    spec:
+      serviceAccountName: devops-agent-sa
+      containers:
+        - name: devops-agent
+          image: <aws-account-id>.dkr.ecr.<region>.amazonaws.com/devops-agent:latest
+          envFrom:
+            - secretRef:
+                name: devops-agent-secrets
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: devops-agent-config

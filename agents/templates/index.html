@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MCP DevOps Agent</title>
+    <script>
+        function fetchStatus() {
+            fetch('/status')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("ollama-status").innerText = data;
+                })
+                .catch(error => {
+                    document.getElementById("ollama-status").innerText = "🔴 Error checking status";
+                });
+        }
+
+        setInterval(fetchStatus, 5000); // Refresh every 5 seconds
+        window.onload = fetchStatus;
+    </script>
+</head>
+<body>
+    <h2>🧠 MCP DevOps Prompt</h2>
+
+    <div>
+        <strong>🩺 Ollama Status:</strong>
+        <span id="ollama-status">Checking...</span>
+    </div>
+
+    <form method="POST" style="margin-top: 20px;">
+        <input type="text" name="query" placeholder="Ask something like: restart all failed pods" style="width: 400px;" required />
+        <button type="submit">Execute</button>
+    </form>
+
+    {% if response %}
+        <p><strong>Agent:</strong> {{ response }}</p>
+    {% endif %}
+</body>
+</html>

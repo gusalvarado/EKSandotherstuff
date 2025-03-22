@@ -1,0 +1,22 @@
+contexts:
+  jira:
+    base_url: https://jira.example.com
+    project_key: DEVOPS
+    api_token: ref://JiraApiToken
+  pipeline:
+    provider: github
+    repo: gusalvarado/infra-deploy
+    trigger_event: deployment
+  infra:
+    provider: aws
+    environment: dev
+  observability:
+    alerts_enabled: True
+    alerts_channel: slack
+  auto-remediation:
+    enabled: True
+    rules:
+      - trigger: high_cpu
+        action: scale_up
+      - trigger: failed_pods
+        action: restart_pods

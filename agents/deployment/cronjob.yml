@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: devops-agent-cronjob
+  namespace: devops
+spec:
+  schedule: "0 2 * * *"  # Runs daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: devops-agent-sa
+          containers:
+            - name: devops-agent
+              image: <aws-account-id>.dkr.ecr.<region>.amazonaws.com/devops-agent:latest
+          restartPolicy: OnFailure

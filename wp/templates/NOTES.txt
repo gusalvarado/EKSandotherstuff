@@ -1,3 +1,0 @@
-1. Pull nginx image
-2. Configure WP DB variables
-3. fuck you bella
